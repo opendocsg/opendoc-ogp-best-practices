@@ -29,9 +29,7 @@ TODO: Flesh out with instructions on recommended hook setup + script
 
 #### CI
 
-Linting should also be done as part of the CI process. 
-
-TODO: Include standard `.travis.yaml` file
+Linting should also be done as part of the CI process. A common setup in the team is to use [Travis CI](https://docs.travis-ci.com/user/getting-started/). A sample Travis YAML file can be [found here](/linting/.travis.yml).
 
 ### JavaScript
 
