@@ -29,9 +29,9 @@ Recommended hooks: `pre-commit` or `pre-push`
 Sample setup: beeline-frontend
 
 1. Install the [`pre-commit` npm package](https://www.npmjs.com/package/pre-commit) to set up the git `pre-commit` hook
-1. Configure `pre-commit` to run an npm script in `package.json` (TODO: add link to exact line in repo)
+1. Configure `pre-commit` to run an npm script in `package.json` ([see here](https://github.com/datagovsg/beeline-frontend/blob/715d478db76a903f1534157228539a8bdde9e032/package.json#L163-L165))
 1. Install the [`lint-staged` npm package](https://www.npmjs.com/package/lint-staged) to only run linter against staged files
-1. Configure `lint-staged` to only look for `*.js` files (optionally automatically `git add`) (TODO: add link to exact line in repo)
+1. Configure `lint-staged` to only look for `*.js` files (optionally automatically `git add`) ([see here](https://github.com/datagovsg/beeline-frontend/blob/715d478db76a903f1534157228539a8bdde9e032/package.json#L166-L171))
 
 #### CI
 
