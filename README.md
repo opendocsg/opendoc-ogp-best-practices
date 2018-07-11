@@ -5,6 +5,7 @@ This are the best practices that the opengovsg team are using. It's meant to be 
 ## Contents
 
 1. [Linting](#linting)
+1. [GitHub](#github)
 
 ## Linting
 
@@ -25,7 +26,12 @@ A recommended way to enforce linting in a codebase is to set up [git hooks](http
 
 Recommended hooks: `pre-commit` or `pre-push`
 
-TODO: Flesh out with instructions on recommended hook setup + script
+Sample setup: beeline-frontend
+
+1. Install the [`pre-commit` npm package](https://www.npmjs.com/package/pre-commit) to set up the git `pre-commit` hook
+1. Configure `pre-commit` to run an npm script in `package.json` (TODO: add link to exact line in repo)
+1. Install the [`lint-staged` npm package](https://www.npmjs.com/package/lint-staged) to only run linter against staged files
+1. Configure `lint-staged` to only look for `*.js` files (optionally automatically `git add`) (TODO: add link to exact line in repo)
 
 #### CI
 
@@ -48,3 +54,9 @@ TODO: Add details on prettier
 
 TODO:
 * Add links to good tutorials (for onboarding)
+
+## GitHub
+
+### Branching strategies
+
+### Branch naming
