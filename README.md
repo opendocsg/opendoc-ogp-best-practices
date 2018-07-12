@@ -16,7 +16,9 @@ This are the best practices that the opengovsg team are using. It's meant to be 
 Most IDEs/text editors have some way to enable automatic linting of the files you're editing. Here's a list of editors + plugins that the team are using:
 
 * Sublime Text + [SublimeLinter](https://github.com/SublimeLinter/SublimeLinter)
+  * Provide sublime text setup for linting here
 * Atom - ???
+* People who use other editors can add their own setups here
 
 TODO: Flesh out with more examples
 
@@ -44,6 +46,13 @@ Linting should also be done as part of the CI process. A common setup in the tea
 The team has a standard eslint config that every project should use as a base config before extending it where necessary. It's available as an npm package - instructions to install and use can be [found here](https://www.npmjs.com/package/@opengovsg/eslint-config-opengovsg).
 
 An example of how to use this can be [seen here](https://github.com/datagovsg/beeline-frontend/pull/658/commits/25704f0a0e0ced181923667dee6742eb4937bf02). Pay special attention to `.eslintrc.json` and how to extend the base config to suit individual project needs (e.g. unique global variables for angular projects).
+
+TODO:
+* Add addtional eslint plugins which can provide useful static analysis:
+  * [eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node) and [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import) (untested)
+    * Makes sure you require available files and modules
+  * [eslint-plugin-promise](https://www.npmjs.com/package/eslint-plugin-promise)
+    * Makes sure promises are used correctly
 
 #### Prettier
 
