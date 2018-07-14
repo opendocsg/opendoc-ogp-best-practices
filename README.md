@@ -6,6 +6,7 @@ This are the best practices that the opengovsg team are using. It's meant to be 
 
 1. [Linting](#linting)
 1. [GitHub](#github)
+1. [Node Dev Setup](#node-dev-setup)
 
 ## Linting
 
@@ -18,6 +19,7 @@ Most IDEs/text editors have some way to enable automatic linting of the files yo
 * Sublime Text + [SublimeLinter](https://github.com/SublimeLinter/SublimeLinter)
   * Provide sublime text setup for linting here
 * Atom - ???
+* VS Code + ESLint + Document This
 * People who use other editors can add their own setups here
 
 TODO: Flesh out with more examples
@@ -69,3 +71,16 @@ TODO:
 ### Branching strategies
 
 ### Branch naming
+
+### Commit naming
+
+See [How to Write a Git Commit](https://chris.beams.io/posts/git-commit/)
+
+## Node Dev Setup
+
+When you're developing, you want to see your changes reflect automatically. 
+Various packages can automatically watch for changes and restart your build and run steps.
+
+* `nodemon` to restart your server
+* `webpack --watch` to build static assets 
+* `webpack-serve` - ???
