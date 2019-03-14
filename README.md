@@ -56,10 +56,6 @@ TODO:
   * [eslint-plugin-promise](https://www.npmjs.com/package/eslint-plugin-promise)
     * Makes sure promises are used correctly
 
-#### Prettier
-
-TODO: Add details on prettier
-
 **[⬆ back to top](#contents)**
 
 
@@ -68,12 +64,38 @@ TODO:
 
 ## GitHub
 
-### Branching strategies
+### Branching strategy
+* Maintain a mainline and release branch, both protected
+* Changes in mainline branch can be moved to the release branch through one of the following:
+  * Raising a PR merging mainline changes into release  
+    Recommended - the release branch clearly indicates what changes the releases
+    have, making rollbacks easier and less error-prone to execute.
+  * `git fetch && git checkout <mainline-name> && git pull && git push origin <mainline-name>:<release-name>`  
+    Discouraged - while it leads to a cleaner commit tree (since both branches end up on the 
+    same sequence of commits), switching between releases is more prone to human error 
+    (though this can be mitigated using release tags), and requires a fair understanding of git 
+    and using git via the command line. That said, this facilitates more precise control over
+    what is released, at the commit level.
+    
+* Feature branches should hang off and merge into the mainline branch
+* Hotfixes and trivial changes can be squashed as a single commit onto mainline
+
+See Atlassian's article on [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow), on which our strategy is loosely based on
 
 ### Branch naming
 
-### Commit naming
+* Mainline and release branches can have the following respective names:
+  * `master` and `release`
+  * `master` and `production`
+  * `develop` and `master`
+  * Any pair of names that conveys the sense that one branch is more stable
+    than the other
 
+* Branch names should be kebab-case (ie, small caps only, hyphen as word separator)
+* Optionally, branch names can be prefixed by a category name followed by /, 
+  * eg. feature/more-cowbell or hotfix/intermittent-hackfix
+
+### Writing commits
 See [How to Write a Git Commit](https://chris.beams.io/posts/git-commit/)
 
 ## Node Dev Setup
