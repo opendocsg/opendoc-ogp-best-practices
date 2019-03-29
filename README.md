@@ -78,6 +78,14 @@ TODO:
     what is released, at the commit level.
     
 * Feature branches should hang off and merge into the mainline branch
+  * Favour rebasing over merging to update feature branches
+  * Keep feature branches **small**. This makes the PR easier to understand,
+    and also makes it easier to rebase the feature branch on mainline should
+    the need arise
+  * If implementing a feature will take too many commits or too much change, 
+    you might be undertaking too much work in one go. If so, split the work
+    into more manageable chunks
+
 * Hotfixes and trivial changes can be squashed as a single commit onto mainline
 
 See Atlassian's article on [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow), on which our strategy is loosely based on
@@ -105,4 +113,5 @@ Various packages can automatically watch for changes and restart your build and 
 
 * `nodemon` to restart your server
 * `webpack --watch` to build static assets 
-* `webpack-serve` - ???
+* `http-server` - to host static assets
+* `concurrently` - to run multiple processes in a single command via npm, eg `webpack --watch` and `nodemon`
