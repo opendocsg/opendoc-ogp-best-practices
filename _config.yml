@@ -1,5 +1,5 @@
 title: Open Government Products - Best Practices
-remote_theme: opendocsg/opendoc-theme
+remote_theme: opendocsg/opendoc-theme@v2
 timezone: Asia/Singapore
 repository: opendocsg/opendoc-opengovsg-best-practices
 plugins:
