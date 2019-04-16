@@ -1,21 +1,16 @@
 title: Open Government Products - Best Practices
 remote_theme: opendocsg/opendoc-theme@v2
 timezone: Asia/Singapore
-repository: opendocsg/opendoc-opengovsg-best-practices
+repository: opendocsg/opendoc-ogp-best-practices
 plugins:
-  - jekyll-seo-tag
   - jekyll-include-cache
 baseurl: ''
 server_PROD: https://search.opendoc.sg
 server_DEV: https://search-staging.opendoc.sg
 # google_analytics: --------> COPY GA ID HERE
-order:
-  - Open Government Products - Best Practices
-  - Node.js Developer Setup
-  - Linting
-  - Using GitHub
-  - AWS Best Practices
-  - Working with Nectar
+document_order:
+  - Development
+  - Deployment
 
 styling_options:
   primary_brand_color: '#276ef1'
