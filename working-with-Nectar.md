@@ -1,4 +1,5 @@
-# A collection of non-obvious things about Nectar
+# Working with Nectar
+## A Collection of Non-Obvious Things About Nectar
 
 Written by @cloudhary. Target audience: SWE unfamiliar with Nectar
 
@@ -14,7 +15,7 @@ You need to take into account what you're able to build with so that you archite
 Do note that each container unit (CU) of Nectar gives you 1Mbps of bandwidth. It can be a bottleneck for data intensive projects. 
 
 ## Development
-‼️Containers are run as random user id that is part of root group‼️
+**‼️Containers are run as random user id that is part of root group‼️**  
 This is an important departure from what your usual workflow might have been. It is not the same as running as root. Make sure you simulate this in your dev and staging environments by doing the following:
 - Run your Docker containers with the user flag, i.e, docker run --user 12345678:0
 - Providing appropriate permissions to necessary directories at build time by doing `RUN chmod -R g+rwx <directory of choice>`. 
