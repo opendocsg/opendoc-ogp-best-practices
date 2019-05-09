@@ -31,9 +31,9 @@
     X-Frame-Options = "deny" 
     # XSS filter, prevent rendering if detected
     X-XSS-Protection = "1; mode=block"
-    Content-Security-Policy = "default-src 'self'; img-src 'none'; frame-src 'none'; font-src 'none'; media-src 'none'; style-src 'none'"
+    Content-Security-Policy = "default-src 'self'; img-src *; frame-src *; font-src *; media-src *; style-src *"
     # Dont send referrer headers
     Referrer-Policy = "no-referrer"
     # Blocks request if request type does not match
     X-Content-Type-Options = "nosniff"
-    Feature-Policy = "geolocation 'none'; midi 'none'; notifications 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; vibrate 'none'; fullscreen 'none'; payment 'none'"
+    Feature-Policy = "geolocation 'none'; microphone 'none'; camera 'none'"
