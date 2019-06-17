@@ -3,7 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
-        - bundle install --deployment
+        - bundle install
     build:
       commands:
         - if [ "${AWS_BRANCH}" = "master" ]; then JEKYLL_ENV=production bundle exec jekyll build
@@ -20,4 +20,3 @@ frontend:
   cache:
     paths: 
       - node_modules
-      - vendor
