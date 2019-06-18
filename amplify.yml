@@ -26,7 +26,7 @@ frontend:
         - pattern: '**/*'
           headers:
                 - key: 'Referrer-Policy'
-                        value: 'no-referrer'
+                        value: 'Referrer-Policy: no-referrer'
                 - key: 'X-Frame-Options'
                         value: 'X-Frame-Options: SAMEORIGIN'
                 - key: 'X-XSS-Protection'
