@@ -3,7 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
-        - bundle install --path=bundled
+        - bundle install --path=vendor/bundle
     build:
       commands:
         - if [ "${AWS_BRANCH}" = "master" ]; then JEKYLL_ENV=production bundle exec jekyll build; fi
@@ -20,4 +20,14 @@ frontend:
   cache:
     paths: 
       - node_modules
-      - bundled
+      - vendor/bundle
+
+  customHeaders:
+      - pattern: '**/*'
+        headers:
+        - key: 'X-Frame-Options'
+          value: 'X-Frame-Options: SAMEORIGIN'
+        - key: 'X-XSS-Protection'
+          value: 'X-XSS-Protection: 1; mode=block'
+        - key: 'X-Content-Type-Options'
+          value: 'X-Content-Type-Options: nosniff'

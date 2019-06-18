@@ -7,6 +7,9 @@ plugins:
 baseurl: ''
 server_PROD: https://search.opendoc.sg
 server_DEV: https://search-staging.opendoc.sg
+exclude:
+  - vendor
+
 # google_analytics: --------> COPY GA ID HERE
 document_order:
   - Development
