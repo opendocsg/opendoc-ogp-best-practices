@@ -3,11 +3,11 @@ frontend:
   phases:
     preBuild:
       commands:
-        - bundle install
+        - bundle install --path=bundled
     build:
       commands:
-        - if [ "${AWS_BRANCH}" = "master" ]; then JEKYLL_ENV=production bundle exec jekyll build
-        - if [ "${AWS_BRANCH}" = "staging" ]; then JEKYLL_ENV=development bundle exec jekyll build        
+        - if [ "${AWS_BRANCH}" = "master" ]; then JEKYLL_ENV=production bundle exec jekyll build; fi
+        - if [ "${AWS_BRANCH}" = "staging" ]; then JEKYLL_ENV=development bundle exec jekyll build; fi    
     postBuild:
       commands:
         - chmod +x ./_site/assets/startup/build.sh
@@ -20,3 +20,4 @@ frontend:
   cache:
     paths: 
       - node_modules
+      - bundled
