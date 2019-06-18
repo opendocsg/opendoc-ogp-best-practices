@@ -21,13 +21,3 @@ frontend:
     paths: 
       - node_modules
       - bundled
-
-  customHeaders:
-        - pattern: '**/*'
-          headers:
-                - key: 'X-Frame-Options'
-                        value: 'X-Frame-Options: SAMEORIGIN'
-                - key: 'X-XSS-Protection'
-                        value: 'X-XSS-Protection: 1; mode=block'
-                - key: 'X-Content-Type-Options'
-                        value: 'X-Content-Type-Options: nosniff'
