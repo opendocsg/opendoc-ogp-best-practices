@@ -1,5 +1,5 @@
 title: Open Government Products - Best Practices
-remote_theme: opendocsg/opendoc-theme@v2
+remote_theme: opendocsg/opendoc-theme@s3pdf
 timezone: Asia/Singapore
 repository: opendocsg/opendoc-ogp-best-practices
 plugins:
@@ -7,6 +7,7 @@ plugins:
 baseurl: ''
 server_PROD: https://search.opendoc.sg
 server_DEV: https://search-staging.opendoc.sg
+offline: false
 # google_analytics: --------> COPY GA ID HERE
 document_order:
   - Development
