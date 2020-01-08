@@ -1,5 +1,5 @@
 title: Open Government Products - Best Practices
-remote_theme: opendocsg/opendoc-theme@v2
+remote_theme: opendocsg/opendoc-theme@master
 timezone: Asia/Singapore
 repository: opendocsg/opendoc-ogp-best-practices
 plugins:
@@ -9,12 +9,29 @@ server_PROD: https://search.opendoc.sg
 server_DEV: https://search-staging.opendoc.sg
 offline: false
 # google_analytics: --------> COPY GA ID HERE
-document_order:
-  - Development
-  - Deployment
 
 styling_options:
   primary_brand_color: '#276ef1'
   logo_path: /assets/logo.png
   opendoc_logo_path: /assets/images/logo-full.png
   feedback_url: https://open.gov.sg/contact-us/
+
+hide_toolbar:
+  sidebar: false
+  pdf: false
+  github: false
+  
+folders:
+  - name: 'Development'
+    title: 'Development'
+    subtitle: ''
+    order:
+      - "node-dev-setup.md"
+      - "linting.md"
+      - "using-github.md"
+  - name: 'Deployment'
+    title: 'Deployment'
+    subtitle: ''
+    order:
+      - "aws.md"
+      - "working-with-nectar.md"
