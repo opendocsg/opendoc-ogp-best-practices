@@ -1,0 +1,364 @@
+<!-- layout for print export.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="./assets/styles/normalize.css">
+    <link rel="stylesheet" href="./assets/styles/main.css">
+  </head>
+
+  <body class="print-content">
+    <section class="description">
+      <img class="description-logo" src="./assets/logo.png">
+      <div class="description-title">Open Government Products - Best Practices</div>
+    </section>
+
+    <div class="site-main" aria-label="Content" >
+      
+<h1 id="aws-best-practices">AWS Best Practices</h1>
+
+<p>These are the best practices we have learnt and adopted while building infrastructure on the cloud. Most of these should apply to any cloud provider.</p>
+
+<h2 id="do-not-use-the-root-account">Do not use the root account</h2>
+<p>The root account is provided when you sign up for an new AWS account. This account has all the permissions to do all the things on your AWS account. If this account gets compromised (e.g. your AWS API secrets get pushed to GitHub), bad things will happen.</p>
+
+<h3 id="what-should-you-do">What should you do?</h3>
+<ol>
+  <li>When you sign up for an AWS account, add 2FA to this root account.</li>
+  <li>Create a new user account and give it rights to do admin tasks</li>
+</ol>
+
+<h2 id="enable-mfa-on-all-iam-account-with-console-access">Enable MFA on all IAM account with console access</h2>
+<p>Cloud infrastructure is critical to any project and we should protect it like we do our bank accounts. MFA is easy to set up on AWS and should be mandatory. You can use the following methods for MFA:</p>
+
+<ul>
+  <li>Software Tokens
+    <ul>
+      <li><a href="https://en.wikipedia.org/wiki/Google_Authenticator">Google Authenticator</a></li>
+      <li><a href="https://authy.com/download/">Authy</a>
+        <ul>
+          <li>Lets you backup and sync the tokens across devices. Useful when you change phones.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Hardware Tokens
+    <ul>
+      <li><a href="https://www.yubico.com/solutions/fido-u2f/">YubiKey</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="only-use-your-personal-credentials-for-local-development">Only use your personal credentials for local development</h2>
+<p>The AWS credentials (Access key and Secret) that come with your IAM account should only be used for local development on computer. It is a bad practice to put them in TravisCI or Heroku.</p>
+
+<h3 id="why">Why?</h3>
+<p>Your IAM user probably has more rights than is needed by a deploy service or the actual running app. For example, the app might just need access to an S3 bucket but your IAM user will have access to entire S3 service, changing password, EC2 and databases.</p>
+
+<h3 id="what-should-you-do-1">What should you do?</h3>
+<p>Creat a new IAM user for each purpose and give that user just the priveleges that it needs. That means the IAM user that you are going to put on TravisCI will only need priveleges to deploy to ElasticBeanstalk. The IAM user for your app will only need access to a specific bucket in S3.</p>
+
+<h2 id="never-ever-hard-code-aws-credentials">Never ever hard-code AWS credentials</h2>
+<p>Don’t be lazy. From the start, just use environment variables to read credentials (or any kind of secrets) inside your code.</p>
+
+<h3 id="why-1">Why?</h3>
+<p>If you never do it, you will never have to worry about having credentials or secrets in your code ever.</p>
+
+<h3 id="how">How?</h3>
+<p>Here is one way of doing this when you start a project:</p>
+<ol>
+  <li>Git ignore env related files and directories
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; echo "env" &gt;&gt; .gitignore &amp;&amp; echo ".env" &gt;&gt; .gitignore
+</code></pre></div>    </div>
+  </li>
+  <li>Create a directory for env files. This is because your might have multiple environments
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; mkdir env
+</code></pre></div>    </div>
+  </li>
+  <li>Create a .env file inside the directory. Name it appropriately. (e.g. heroku.env for envvars for heroku)
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; touch heroku.env
+</code></pre></div>    </div>
+  </li>
+  <li>Add the envvars into the file
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export SOME_SECRET_FOR_SOME_PURPOSE=secret
+</code></pre></div>    </div>
+  </li>
+  <li>Source the env file before running your app
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; source env/heroku.env
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>You could also node module like (dotenv)[https://github.com/motdotla/dotenv] to do this.</p>
+
+<h2 id="make-use-of-iam-roles">Make use of IAM roles</h2>
+<p>If your app lives in AWS, then most likely you don’t have to provide access keys to access other AWS services. Services like ElasticBeanstalk and AWS Lambda allow you to provide a IAM role during the creation process or as a config. You can then give these roles permissions to use other AWS services. EC2 instances can only be assigned an IAM role during creation so always makes sure you start instances with a role even if they don’t need permissions right away.</p>
+
+<h2 id="grant-the-least-privilege-possible">Grant the least privilege possible</h2>
+
+<p>This is a standard security practice. You only need the permissions to do what you are supposed to do. If the app needs to upload an image to an S3 Bucket, then it should only have permissions to do just that. That means no permissions to view other buckets, list contents of the current bucket, remove items from the bucket or delete a bucket.</p>
+
+<p>This makes it easy to audit the permissions of an app. If the app only has permissions to put an object on S3, then that’s all it can ever do. Let’s say you gave an app full access to S3 then it is not easy for you to say for sure what a compromised app could have done. TLDR: You reduce the attack surface in case of compromise.</p>
+
+<h3 id="why-do-people-not-do-this">Why do people not do this?</h3>
+<p>Most people grant more permissions than required because it is less tedious when developing. So if your app needs access to read a particular DynamoDB table, you just give it full access to DynamoDB. What if you need to read another table? What if you also need to do table operation like remove or add tables? What if you need to add items to the table in the future? Who wants to be going into the AWS console everytime you need additional permissions?</p>
+
+<h3 id="why-should-you-do-this">Why should you do this?</h3>
+<p>It is easier start with least privilege than having to remove permissions from your app while it is already running. You are likely to break your app while removing permissions from it later on in the project. So you might as well do it correctly from the start.</p>
+
+<blockquote>
+  <p>“Only put off untill tomorrow what you are willing to die having left undone” - Pablo Picasso</p>
+</blockquote>
+
+<h2 id="there-is-a-managed-service-for-that">There is a managed service for that!</h2>
+<p>Before you start configuring your own server on EC2 (IaaS), look for a managed service (PaaS, sort of) that will do it better than you.</p>
+
+<p>Instead of installing node on EC2, you can use ElasticBeanstalk. Instead of installing PostgreSQL, you can use RDS or Amazon Aurora. Instead of setting up your own email server, you can use SES. You get the idea.</p>
+
+<h3 id="why-2">Why?</h3>
+<p>Managed services let you focus on developing your actual application. They make it easier to administer and scale your infrastructure.Take RDS as an example. It lets you setup automatic backups and updates of your database.</p>
+
+<blockquote>
+  <p>Amazon RDS provides cost-efficient and scalable relational database capacity while automating time-consuming administration tasks such as hardware provisioning, database setup, patching and backups. It frees you to focus on your applications so you can give them the fast performance, high availability, security and compatibility they need.</p>
+</blockquote>
+
+<p>Managed services are usually more expensive than running the same on EC2 but it is totaly worth the cost. Your time is more valuable to the team.</p>
+
+<h2 id="use-the-right-region">Use the right region</h2>
+<p>This is quite dumb. Make sure to check if you are in the Singapore region when you log in before you start messing with AWS. Sometimes AWS might switch your region and you will be happily setting a new RDS instance in another region only to realise you have to do it all again. We have all done this mistake before.</p>
+
+<h2 id="if-it-is-too-complicated-then-you-are-probably-doing-it-wrong">If it is too complicated, then you are probably doing it wrong.</h2>
+<p>Doing things on AWS should be simple and straight forward. If you find yourself doing something complicated (IP tables etc.), you are probably doing it wrong. Ask your peer for a sanity check on what you are trying to do.</p>
+
+<p>Source:</p>
+
+<ul>
+  <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html">IAM Best Practices</a></li>
+</ul>
+
+<h1 id="working-with-nectar">Working with Nectar</h1>
+<h2 id="a-collection-of-non-obvious-things-about-nectar">A Collection of Non-Obvious Things About Nectar</h2>
+
+<p>Written by @cloudhary. Target audience: SWE unfamiliar with Nectar</p>
+
+<h2 id="what-is-nectar">What is Nectar?</h2>
+<p>Nectar is a Platform-as-a-Service product (it’s actually Redhat’s Openshift Enterprise) that will build and run your docker images</p>
+
+<h2 id="how-do-we-build-products-for-nectar">How do we build products for Nectar?</h2>
+
+<p>You need to take into account what you’re able to build with so that you architect systems appropriately. You have only two things on Nectar:</p>
+<ul>
+  <li>Docker containers (that you specify using a Dockerfile)</li>
+  <li>Persistence through either volumes or a managed MySQL DB.</li>
+</ul>
+
+<p>Do note that each container unit (CU) of Nectar gives you 1Mbps of bandwidth. It can be a bottleneck for data intensive projects.</p>
+
+<h2 id="development">Development</h2>
+<p><strong>‼️Containers are run as random user id that is part of root group‼️</strong><br />
+This is an important departure from what your usual workflow might have been. It is not the same as running as root. Make sure you simulate this in your dev and staging environments by doing the following:</p>
+<ul>
+  <li>Run your Docker containers with the user flag, i.e, docker run –user 12345678:0</li>
+  <li>Providing appropriate permissions to necessary directories at build time by doing <code class="language-plaintext highlighter-rouge">RUN chmod -R g+rwx &lt;directory of choice&gt;</code>. 
+But be mindful - use the aforementioned command with caution as some important directories will not respect the modification. For example, you cannot modify or change permissions of the /etc/hosts file, or anything in the entire /etc and /var directory</li>
+</ul>
+
+<h2 id="building">Building</h2>
+<p>This is the only phase in the Nectar build process that has internet access. All dependencies should be imported and installed during this phase.</p>
+
+<p>Building takes time, particularly the scanning and transferring stage. Be patient. If you’re eager to improve the situation, do things that will reduce the size of your image. Use a small base image, use fewer packages, don’t import unnecessary dependencies like nodemon, minimize layers, etc.</p>
+
+<p>Do not make assumptions when building and deploying for Nectar. Where possible, use the “verbose” option (–verbose, -v etc.) to be sure of what is going on</p>
+
+<h2 id="deploying">Deploying</h2>
+<p>The easiest step of them all. Just click deploy.</p>
+
+<p>Have at least two replicas running so that the underlying Kubernetes can evict any one of them without any impact to your service availability.</p>
+
+<p>After clicking deploy, even if Nectar shows that the deploy was a success, be sure to check the logs to figure it out by your own.</p>
+
+<p>Avoid using the health check endpoint unless you have time to figure it out and monitoring is critical for your application. It is sometimes either a liveness check or a readiness check, and if you set it up wrongly, your code may either never deploy or it may cause a healthy service to continually restart unnecessarily. They already have a monitoring service that will ping your endpoint every 5 mins and send an email to you if it fails. Just rely on that.</p>
+
+<p>You need to use a forward proxy and request for credentials to communicate with any external services. To connect to your other services or the DB tier, use the environment variables</p>
+
+<h2 id="debugging">Debugging</h2>
+<p>The Nectar engineers are friendly and helpful. They are keen to see us succeed and are willing to accomodate most requests that are within their paygrade to solve. Raise a service request so that they are able to allocate resources to attend to you. Make friends with them so that you can ask for clarifications. Join the #nectar-warriors channel so that you can ask other OGP engineers who have struggled with</p>
+
+<p>Once you’ve deployed the application, logs don’t show up immediately. They take about 10 seconds to show up. Patiently wait for them and refresh the logs page.</p>
+
+<p>The terminal is quite useful when debugging. You will have an easier time debugging if you install essential tools need during the build time, especially if you use base images. For example, let’s say you want to check if certain routes in your app are working, you could use curl to call it from the terminal. If you didn’t have it installed in the docker image, you would have to go through the entire build process again before you can continue troubleshooting. That could take about 30 mins. So make sure you install all of the tools you need for debugging. Oh, do remember that since you don’t have root privileges, you are unable to run <code class="language-plaintext highlighter-rouge">ping</code> and <code class="language-plaintext highlighter-rouge">traceroute</code>. Check the linux man page to figure out if you need to be root. Usually, you’re going to want to have <code class="language-plaintext highlighter-rouge">curl</code> installed and you’ll need to make do with just that.</p>
+
+<h2 id="some-things-that-dont-yet-exist">Some things that don’t yet exist</h2>
+<p>A couple of things that you might find yourself craving that don’t yet exist: Travis CI, Serverless functions, MongoDB, docker-compose, multi-stage builds, SSH into container from command line, interactive terminal (file editing software like vi don’t work, for example), Auto scaling, Terraform / Infra as Code</p>
+
+<h1 id="linting">Linting</h1>
+
+<p>Code should be at the very least consistently formatted. This section covers how to enforce linting across deve environments as well as within source control</p>
+
+<h2 id="setup">Setup</h2>
+
+<h3 id="ideeditor">IDE/Editor</h3>
+
+<p>Most IDEs/text editors have some way to enable automatic linting of the files you’re editing. Here’s a list of editors + plugins that the team are using:</p>
+
+<ul>
+  <li>Sublime Text + <a href="https://github.com/SublimeLinter/SublimeLinter">SublimeLinter</a>
+    <ul>
+      <li>Provide sublime text setup for linting here</li>
+    </ul>
+  </li>
+  <li>VS Code + ESLint + Document This</li>
+</ul>
+
+<p>TODO: Flesh out with more examples</p>
+
+<h3 id="git-hooks">Git Hooks</h3>
+
+<p>A recommended way to enforce linting in a codebase is to set up <a href="https://git-scm.com/book/gr/v2/Customizing-Git-Git-Hooks">git hooks</a> to lint the codebase. This will help to ensure that the git history is tidy and that all pull requests meet the code style/formatting standards, preventing code reviews from being cluttered with basic comments on code style/formatting.</p>
+
+<p>Recommended hooks: <code class="language-plaintext highlighter-rouge">pre-commit</code> or <code class="language-plaintext highlighter-rouge">pre-push</code></p>
+
+<p>Sample setup: beeline-frontend</p>
+
+<ol>
+  <li>Install the <a href="https://www.npmjs.com/package/pre-commit"><code class="language-plaintext highlighter-rouge">pre-commit</code> npm package</a> to set up the git <code class="language-plaintext highlighter-rouge">pre-commit</code> hook</li>
+  <li>Configure <code class="language-plaintext highlighter-rouge">pre-commit</code> to run an npm script in <code class="language-plaintext highlighter-rouge">package.json</code> (<a href="https://github.com/datagovsg/beeline-frontend/blob/715d478db76a903f1534157228539a8bdde9e032/package.json#L163-L165">see here</a>)</li>
+  <li>Install the <a href="https://www.npmjs.com/package/lint-staged"><code class="language-plaintext highlighter-rouge">lint-staged</code> npm package</a> to only run linter against staged files</li>
+  <li>Configure <code class="language-plaintext highlighter-rouge">lint-staged</code> to only look for <code class="language-plaintext highlighter-rouge">*.js</code> files (optionally automatically <code class="language-plaintext highlighter-rouge">git add</code>) (<a href="https://github.com/datagovsg/beeline-frontend/blob/715d478db76a903f1534157228539a8bdde9e032/package.json#L166-L171">see here</a>)</li>
+</ol>
+
+<h3 id="ci">CI</h3>
+
+<p>Linting should also be done as part of the CI process. A common setup in the team is to use <a href="https://docs.travis-ci.com/user/getting-started/">Travis CI</a>. A sample Travis YAML file can be <a href="assets/linting/.travis.yml">found here</a>.</p>
+
+<h2 id="javascript">JavaScript</h2>
+
+<h3 id="eslint-config">eslint config</h3>
+
+<p>The team has a standard eslint config that every project should use as a base config before extending it where necessary. It’s available as an npm package - instructions to install and use can be <a href="https://www.npmjs.com/package/@opengovsg/eslint-config-opengovsg">found here</a>.</p>
+
+<p>An example of how to use this can be <a href="https://github.com/datagovsg/beeline-frontend/pull/658/commits/25704f0a0e0ced181923667dee6742eb4937bf02">seen here</a>. Pay special attention to <code class="language-plaintext highlighter-rouge">.eslintrc.json</code> and how to extend the base config to suit individual project needs (e.g. unique global variables for angular projects).</p>
+
+<p>TODO:</p>
+<ul>
+  <li>Add addtional eslint plugins which can provide useful static analysis:
+    <ul>
+      <li><a href="https://www.npmjs.com/package/eslint-plugin-node">eslint-plugin-node</a> and <a href="https://github.com/benmosher/eslint-plugin-import">eslint-plugin-import</a> (untested)
+        <ul>
+          <li>Makes sure you require available files and modules</li>
+        </ul>
+      </li>
+      <li><a href="https://www.npmjs.com/package/eslint-plugin-promise">eslint-plugin-promise</a>
+        <ul>
+          <li>Makes sure promises are used correctly</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>TODO:</p>
+<ul>
+  <li>Add links to good tutorials (for onboarding)</li>
+</ul>
+
+<h1 id="nodejs-developer-setup">Node.js Developer Setup</h1>
+
+<p>This covers various aspects of setting up an environment for development purposes</p>
+
+<h2 id="linting-1">Linting</h2>
+
+<p>See <a href="/opendoc-ogp-best-practices/Development/linting.html">Linting</a></p>
+
+<h2 id="running-things-on-a-dev-machine">Running things on a dev machine</h2>
+
+<p>When you’re developing, you want to see your changes reflect automatically. 
+Various packages can automatically watch for changes and restart your build and run steps.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">nodemon</code> to restart your server</li>
+  <li><code class="language-plaintext highlighter-rouge">webpack --watch</code> to build static assets</li>
+  <li><code class="language-plaintext highlighter-rouge">http-server</code> - to host static assets</li>
+  <li><code class="language-plaintext highlighter-rouge">concurrently</code> - to run multiple processes in a single command via npm, eg <code class="language-plaintext highlighter-rouge">webpack --watch</code> and <code class="language-plaintext highlighter-rouge">nodemon</code></li>
+</ul>
+
+<h1 id="using-github">Using GitHub</h1>
+
+<p>Source control is vital to collaboration between developers. This sets out a few guidelines
+worth observing when coordinating changes in GitHub</p>
+
+<h2 id="branching-strategy">Branching strategy</h2>
+<ul>
+  <li>Maintain a mainline and release branch, both protected</li>
+  <li>Changes in mainline branch can be moved to the release branch through one of the following:
+    <ul>
+      <li>Raising a PR merging mainline changes into release<br />
+Recommended - the release branch clearly indicates what changes the releases
+have, making rollbacks easier and less error-prone to execute.</li>
+      <li><code class="language-plaintext highlighter-rouge">git fetch &amp;&amp; git checkout &lt;mainline-name&gt; &amp;&amp; git pull &amp;&amp; git push origin &lt;mainline-name&gt;:&lt;release-name&gt;</code><br />
+Discouraged - while it leads to a cleaner commit tree (since both branches end up on the 
+same sequence of commits), switching between releases is more prone to human error 
+(though this can be mitigated using release tags), and requires a fair understanding of git 
+and using git via the command line. That said, this facilitates more precise control over
+what is released, at the commit level.</li>
+    </ul>
+  </li>
+  <li>Feature branches should hang off and merge into the mainline branch
+    <ul>
+      <li>Favour rebasing over merging to update feature branches</li>
+      <li>Keep feature branches <strong>small</strong>. This makes the PR easier to understand,
+and also makes it easier to rebase the feature branch on mainline should
+the need arise</li>
+      <li>If implementing a feature will take too many commits or too much change, 
+you might be undertaking too much work in one go. If so, split the work
+into more manageable chunks</li>
+    </ul>
+  </li>
+  <li>Hotfixes and trivial changes can be squashed as a single commit onto mainline</li>
+</ul>
+
+<p>See Atlassian’s article on <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow">Gitflow Workflow</a>, on which our strategy is loosely based on</p>
+
+<h2 id="branch-naming">Branch naming</h2>
+
+<ul>
+  <li>Mainline and release branches can have the following respective names:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">master</code> and <code class="language-plaintext highlighter-rouge">release</code></li>
+      <li><code class="language-plaintext highlighter-rouge">master</code> and <code class="language-plaintext highlighter-rouge">production</code></li>
+      <li><code class="language-plaintext highlighter-rouge">develop</code> and <code class="language-plaintext highlighter-rouge">master</code></li>
+      <li>Any pair of names that conveys the sense that one branch is more stable
+than the other</li>
+    </ul>
+  </li>
+  <li>Branch names should be kebab-case (ie, small caps only, hyphen as word separator)</li>
+  <li>Optionally, branch names can be prefixed by a category name followed by /,
+    <ul>
+      <li>eg. feature/more-cowbell or hotfix/intermittent-hackfix</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="writing-commits">Writing commits</h2>
+<p>See <a href="https://chris.beams.io/posts/git-commit/">How to Write a Git Commit</a></p>
+
+<h2 id="writing-prs-and-comments">Writing PRs and Comments</h2>
+<p>Make use of the following features:</p>
+
+<ul>
+  <li><a href="https://help.github.com/en/articles/closing-issues-using-keywords">Closing issues via Pull Requests</a></li>
+  <li><a href="https://help.github.com/en/articles/autolinked-references-and-urls">Referencing commits, issues and other repos</a></li>
+  <li><a href="https://help.github.com/en/articles/creating-a-permanent-link-to-a-code-snippet">Referencing repository code</a></li>
+  <li><a href="https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown">GitHub Flavored Markdown</a></li>
+  <li><a href="https://help.github.com/en/articles/about-duplicate-issues-and-pull-requests">Marking duplicates</a></li>
+</ul>
+
+
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AWS Best Practices</title>
+  <meta name="description" content="AWS Best Practices
+
+These are the best practices we have learnt and adopted while building infrastru">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:image" content="/opendoc-ogp-best-practices/site.styling_options.logo_path">
+
+  <link rel="icon" href="/opendoc-ogp-best-practices/assets/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Fira+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/opendoc-ogp-best-practices/assets/styles/normalize.css">
+  <link rel="stylesheet" href="/opendoc-ogp-best-practices/assets/styles/main.css">
+  <link rel="alternate" type="application/rss+xml" title="Open Government Products - Best Practices"
+    href="/opendoc-ogp-best-practices/feed.xml">
+  <!-- Polyfill for corejs functions, promises, array.includes, array.from, etc. -->
+  <script src="/opendoc-ogp-best-practices/assets/vendor/babel-polyfill.min.js"></script>
+  <!-- Polyfill for dom functions -->
+  <script src="/opendoc-ogp-best-practices/assets/vendor/dom4.js" charset="utf-8"></script>
+  <!-- Polyfill for fetch API -->
+  <script src="/opendoc-ogp-best-practices/assets/vendor/fetch.umd.js"></script>
+  <!-- Priority Queue library for promises -->
+  <script src="/opendoc-ogp-best-practices/assets/js/pqueue.js"></script>
+  <!-- Helper functions that should be preloaded go here -->
+  <script src="/opendoc-ogp-best-practices/assets/js/helpers.js"></script></head>
+
+<body>
+  <div class="site-header no-print">
+    <div class="site-header-left">
+      <a href="/opendoc-ogp-best-practices/">
+        <h1 class="site-header-text">
+          Open Government Products - Best Practices
+        </h1>
+      </a>
+      <span class="site-last-updated">
+        LAST UPDATED: 02 JUNE 2020
+      <span>
+    </div>
+    <div class="site-header-right"><a id="contact-us" href="https://open.gov.sg/contact-us/" target="_blank">
+        <span>Contact Us</span>
+      </a>
+      <a href="" class="desktop">
+        <img class="agency-logo" src="/opendoc-ogp-best-practices/assets/logo.png">
+      </a>
+      <a href="/opendoc-ogp-best-practices/" class="mobile">
+        <img class="agency-logo" src="/opendoc-ogp-best-practices/assets/logo.png">
+      </a>
+      <a class="search-btn top-mobile-btn">
+        <img src="/opendoc-ogp-best-practices/assets/images/search-icon-dark.svg">
+      </a>
+    </div>
+  </div>
+
+  <nav class="site-nav no-print">
+    <div class="nav-header no-print">
+      <div class="search-box">
+        <div class="search-icon-container search-btn">
+          <img class="search-icon mobile" src="/opendoc-ogp-best-practices/assets/images/search-icon-dark.svg"/>
+          <img class="search-icon" src="/opendoc-ogp-best-practices/assets/images/search-icon-white.svg"/>
+          <img class="close-icon" src="/opendoc-ogp-best-practices/assets/images/close.svg"/>
+        </div>
+        <span class="search-filter hidden">Deployment</span>
+        <div class="search-input-container">
+          <p class="search-header">search entire site</p>
+          <input id="search-box" placeholder="Search titles or keywords" type="text" />
+        </div>
+        <label class="clear-button">
+          <svg class="clear-icon" viewBox="0 0 18 18" width="18" height="18">
+            <path d="M2.42755 1L17.0331 15.60554l-1.41423 1.4142L1 2.38402"></path>
+            <path d="M1 15.51932L15.51933 1l1.4142 1.4142L2.2978 17.0331"></path>
+          </svg>
+        </label>
+      </div>
+      <div class="search-results">
+      </div>
+    </div>
+    <div class="nav-main no-print">
+
+    
+
+
+<section class="navigation">
+
+<ul class="table-of-directories hidden">
+                    <li>    <a href="/opendoc-ogp-best-practices/Development" id="dir_development" class="tod-container">        <div class="directory-item">Development</div>    </a>    </li>                    <li>    <a href="/opendoc-ogp-best-practices/Deployment" id="dir_deployment" class="tod-container">        <div class="directory-item">Deployment</div>    </a>    </li>
+</ul>
+<div class="back-to-documents">
+    <p>Back to Documents <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/chevron-up.svg"></p>
+</div>
+
+
+
+
+    
+    
+    <section id="toc_development" class="contents" hidden>
+    
+    
+
+
+            
+
+    
+        
+            
+
+            
+
+            
+
+            
+
+            
+
+
+
+    
+        
+            
+        
+            
+                
+                
+    
+        
+            
+                
+                
+    
+        
+            
+        
+            
+        
+            
+                
+                
+    
+
+
+
+<ul class="table-of-contents">  <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/node-dev-setup.html" class="nav-link"><span class="directory-item"> Node.js Developer Setup </span></a>    <ul>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/node-dev-setup.html#linting" class="nav-link"><span class="directory-item"> Linting </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/node-dev-setup.html#running-things-on-a-dev-machine" class="nav-link"><span class="directory-item"> Running things on a dev machine </span></a></li>    </ul>  </li>  <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/linting.html" class="nav-link"><span class="directory-item"> Linting </span></a>    <ul>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/linting.html#setup" class="nav-link"><span class="directory-item"> Setup </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/linting.html#javascript" class="nav-link"><span class="directory-item"> JavaScript </span></a></li>    </ul>  </li>  <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/using-github.html" class="nav-link"><span class="directory-item"> Using GitHub </span></a>    <ul>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/using-github.html#branching-strategy" class="nav-link"><span class="directory-item"> Branching strategy </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/using-github.html#branch-naming" class="nav-link"><span class="directory-item"> Branch naming </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/using-github.html#writing-commits" class="nav-link"><span class="directory-item"> Writing commits </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Development/using-github.html#writing-prs-and-comments" class="nav-link"><span class="directory-item"> Writing PRs and Comments </span></a></li>    </ul>  </li></ul>
+    </section>
+
+    
+    
+    <section id="toc_deployment" class="contents">
+    
+    
+
+
+            
+
+    
+        
+            
+
+            
+
+            
+
+            
+
+            
+
+
+
+    
+        
+            
+                
+                
+    
+        
+            
+        
+            
+                
+                
+    
+
+
+
+<ul class="table-of-contents">  <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html" class="nav-link"><span class="directory-item"> AWS Best Practices </span></a>    <ul>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html#do-not-use-the-root-account" class="nav-link"><span class="directory-item"> Do not use the root account </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html#enable-mfa-on-all-iam-account-with-console-access" class="nav-link"><span class="directory-item"> Enable MFA on all IAM account with console access </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html#only-use-your-personal-credentials-for-local-development" class="nav-link"><span class="directory-item"> Only use your personal credentials for local development </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html#never-ever-hard-code-aws-credentials" class="nav-link"><span class="directory-item"> Never ever hard-code AWS credentials </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html#make-use-of-iam-roles" class="nav-link"><span class="directory-item"> Make use of IAM roles </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html#grant-the-least-privilege-possible" class="nav-link"><span class="directory-item"> Grant the least privilege possible </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html#there-is-a-managed-service-for-that" class="nav-link"><span class="directory-item"> There is a managed service for that! </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html#use-the-right-region" class="nav-link"><span class="directory-item"> Use the right region </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/aws.html#if-it-is-too-complicated-then-you-are-probably-doing-it-wrong" class="nav-link"><span class="directory-item"> If it is too complicated, then you are probably doing it wrong. </span></a></li>    </ul>  </li>  <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/working-with-nectar.html" class="nav-link"><span class="directory-item"> Working with Nectar </span></a>    <ul>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/working-with-nectar.html#a-collection-of-non-obvious-things-about-nectar" class="nav-link"><span class="directory-item"> A Collection of Non-Obvious Things About Nectar </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/working-with-nectar.html#what-is-nectar" class="nav-link"><span class="directory-item"> What is Nectar? </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/working-with-nectar.html#how-do-we-build-products-for-nectar" class="nav-link"><span class="directory-item"> How do we build products for Nectar? </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/working-with-nectar.html#development" class="nav-link"><span class="directory-item"> Development </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/working-with-nectar.html#building" class="nav-link"><span class="directory-item"> Building </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/working-with-nectar.html#deploying" class="nav-link"><span class="directory-item"> Deploying </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/working-with-nectar.html#debugging" class="nav-link"><span class="directory-item"> Debugging </span></a></li>      <li class="nav-branch"><a href="/opendoc-ogp-best-practices/Deployment/working-with-nectar.html#some-things-that-dont-yet-exist" class="nav-link"><span class="directory-item"> Some things that don’t yet exist </span></a></li>    </ul>  </li></ul>
+    </section>
+
+</section></div>
+  </nav><div id="index-div">
+  <header class="doc-header no-print">
+    <div class=description-container>
+      <h2 id="document-title">
+        Deployment
+      </h2>
+      <div>
+        <div id="document-subtitle">
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar-container no-print">
+    <label for="menu-toggle" class="toolbar-button" id="menu-toggle-btn">
+            <input type="checkbox" id="menu-toggle" hidden>
+            <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/sidebar.svg">
+            <img class="btn-icon hover" src="/opendoc-ogp-best-practices/assets/images/sidebar-hover.svg">
+            <img class="mobile-btn-icon " src="/opendoc-ogp-best-practices/assets/images/menu.svg">
+            <img class="mobile-btn-icon close" src="/opendoc-ogp-best-practices/assets/images/x-mobile.svg">
+            <div class="tooltip">Toggle Sidebar</div>
+        </label><div class="toolbar-button print-btn">
+            <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/pdf.svg">
+            <img class="btn-icon hover" src="/opendoc-ogp-best-practices/assets/images/pdf-hover.svg">
+            <div class="tooltip">Save as PDF</div>
+        </div><div class="toolbar-button edit-btn">
+            <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/github.svg">
+            <img class="btn-icon hover" src="/opendoc-ogp-best-practices/assets/images/github-hover.svg">
+            <div class="tooltip">View on Github</div>
+        </div></div>
+
+<div class="fab no-print" id="fab">
+    <div class="overlay" id="fab-overlay"></div>
+    <div class="back-to-top hidden" id="back-to-top" href="#">
+        <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/chevron-up-white.svg">
+    </div>
+    <div class="trigger" id="fab-trigger">
+        <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/vertical-dots.svg">
+        <img class="btn-icon close" src="/opendoc-ogp-best-practices/assets/images/x-mobile.svg">
+    </div>
+    <div class="actions"><a class="action feedback-btn" href="https://open.gov.sg/contact-us/" target="_blank">
+            <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/feedback.svg">
+            <div class="tooltip">Feedback</div>
+        </a>
+        <div class="action share-btn">
+            <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/share.svg">
+            <div class="tooltip">Share</div>
+        </div>
+        <div class="action print-btn">
+                <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/pdf.svg">
+                <div class="tooltip">Save as PDF</div>
+            </div><div class="action edit-btn">
+                <img class="btn-icon" src="/opendoc-ogp-best-practices/assets/images/github.svg">
+                <div class="tooltip">View on Github</div>
+            </div></div>
+</div>
+  </div>
+
+  <main class="site-main" id="main-content" aria-label="Content"><h1 id="aws-best-practices">AWS Best Practices</h1>
+
+<p>These are the best practices we have learnt and adopted while building infrastructure on the cloud. Most of these should apply to any cloud provider.</p>
+
+<h2 id="do-not-use-the-root-account">Do not use the root account</h2>
+<p>The root account is provided when you sign up for an new AWS account. This account has all the permissions to do all the things on your AWS account. If this account gets compromised (e.g. your AWS API secrets get pushed to GitHub), bad things will happen.</p>
+
+<h3 id="what-should-you-do">What should you do?</h3>
+<ol>
+  <li>When you sign up for an AWS account, add 2FA to this root account.</li>
+  <li>Create a new user account and give it rights to do admin tasks</li>
+</ol>
+
+<h2 id="enable-mfa-on-all-iam-account-with-console-access">Enable MFA on all IAM account with console access</h2>
+<p>Cloud infrastructure is critical to any project and we should protect it like we do our bank accounts. MFA is easy to set up on AWS and should be mandatory. You can use the following methods for MFA:</p>
+
+<ul>
+  <li>Software Tokens
+    <ul>
+      <li><a href="https://en.wikipedia.org/wiki/Google_Authenticator">Google Authenticator</a></li>
+      <li><a href="https://authy.com/download/">Authy</a>
+        <ul>
+          <li>Lets you backup and sync the tokens across devices. Useful when you change phones.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Hardware Tokens
+    <ul>
+      <li><a href="https://www.yubico.com/solutions/fido-u2f/">YubiKey</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="only-use-your-personal-credentials-for-local-development">Only use your personal credentials for local development</h2>
+<p>The AWS credentials (Access key and Secret) that come with your IAM account should only be used for local development on computer. It is a bad practice to put them in TravisCI or Heroku.</p>
+
+<h3 id="why">Why?</h3>
+<p>Your IAM user probably has more rights than is needed by a deploy service or the actual running app. For example, the app might just need access to an S3 bucket but your IAM user will have access to entire S3 service, changing password, EC2 and databases.</p>
+
+<h3 id="what-should-you-do-1">What should you do?</h3>
+<p>Creat a new IAM user for each purpose and give that user just the priveleges that it needs. That means the IAM user that you are going to put on TravisCI will only need priveleges to deploy to ElasticBeanstalk. The IAM user for your app will only need access to a specific bucket in S3.</p>
+
+<h2 id="never-ever-hard-code-aws-credentials">Never ever hard-code AWS credentials</h2>
+<p>Don’t be lazy. From the start, just use environment variables to read credentials (or any kind of secrets) inside your code.</p>
+
+<h3 id="why-1">Why?</h3>
+<p>If you never do it, you will never have to worry about having credentials or secrets in your code ever.</p>
+
+<h3 id="how">How?</h3>
+<p>Here is one way of doing this when you start a project:</p>
+<ol>
+  <li>Git ignore env related files and directories
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; echo "env" &gt;&gt; .gitignore &amp;&amp; echo ".env" &gt;&gt; .gitignore
+</code></pre></div>    </div>
+  </li>
+  <li>Create a directory for env files. This is because your might have multiple environments
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; mkdir env
+</code></pre></div>    </div>
+  </li>
+  <li>Create a .env file inside the directory. Name it appropriately. (e.g. heroku.env for envvars for heroku)
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; touch heroku.env
+</code></pre></div>    </div>
+  </li>
+  <li>Add the envvars into the file
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export SOME_SECRET_FOR_SOME_PURPOSE=secret
+</code></pre></div>    </div>
+  </li>
+  <li>Source the env file before running your app
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; source env/heroku.env
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>You could also node module like (dotenv)[https://github.com/motdotla/dotenv] to do this.</p>
+
+<h2 id="make-use-of-iam-roles">Make use of IAM roles</h2>
+<p>If your app lives in AWS, then most likely you don’t have to provide access keys to access other AWS services. Services like ElasticBeanstalk and AWS Lambda allow you to provide a IAM role during the creation process or as a config. You can then give these roles permissions to use other AWS services. EC2 instances can only be assigned an IAM role during creation so always makes sure you start instances with a role even if they don’t need permissions right away.</p>
+
+<h2 id="grant-the-least-privilege-possible">Grant the least privilege possible</h2>
+
+<p>This is a standard security practice. You only need the permissions to do what you are supposed to do. If the app needs to upload an image to an S3 Bucket, then it should only have permissions to do just that. That means no permissions to view other buckets, list contents of the current bucket, remove items from the bucket or delete a bucket.</p>
+
+<p>This makes it easy to audit the permissions of an app. If the app only has permissions to put an object on S3, then that’s all it can ever do. Let’s say you gave an app full access to S3 then it is not easy for you to say for sure what a compromised app could have done. TLDR: You reduce the attack surface in case of compromise.</p>
+
+<h3 id="why-do-people-not-do-this">Why do people not do this?</h3>
+<p>Most people grant more permissions than required because it is less tedious when developing. So if your app needs access to read a particular DynamoDB table, you just give it full access to DynamoDB. What if you need to read another table? What if you also need to do table operation like remove or add tables? What if you need to add items to the table in the future? Who wants to be going into the AWS console everytime you need additional permissions?</p>
+
+<h3 id="why-should-you-do-this">Why should you do this?</h3>
+<p>It is easier start with least privilege than having to remove permissions from your app while it is already running. You are likely to break your app while removing permissions from it later on in the project. So you might as well do it correctly from the start.</p>
+
+<blockquote>
+  <p>“Only put off untill tomorrow what you are willing to die having left undone” - Pablo Picasso</p>
+</blockquote>
+
+<h2 id="there-is-a-managed-service-for-that">There is a managed service for that!</h2>
+<p>Before you start configuring your own server on EC2 (IaaS), look for a managed service (PaaS, sort of) that will do it better than you.</p>
+
+<p>Instead of installing node on EC2, you can use ElasticBeanstalk. Instead of installing PostgreSQL, you can use RDS or Amazon Aurora. Instead of setting up your own email server, you can use SES. You get the idea.</p>
+
+<h3 id="why-2">Why?</h3>
+<p>Managed services let you focus on developing your actual application. They make it easier to administer and scale your infrastructure.Take RDS as an example. It lets you setup automatic backups and updates of your database.</p>
+
+<blockquote>
+  <p>Amazon RDS provides cost-efficient and scalable relational database capacity while automating time-consuming administration tasks such as hardware provisioning, database setup, patching and backups. It frees you to focus on your applications so you can give them the fast performance, high availability, security and compatibility they need.</p>
+</blockquote>
+
+<p>Managed services are usually more expensive than running the same on EC2 but it is totaly worth the cost. Your time is more valuable to the team.</p>
+
+<h2 id="use-the-right-region">Use the right region</h2>
+<p>This is quite dumb. Make sure to check if you are in the Singapore region when you log in before you start messing with AWS. Sometimes AWS might switch your region and you will be happily setting a new RDS instance in another region only to realise you have to do it all again. We have all done this mistake before.</p>
+
+<h2 id="if-it-is-too-complicated-then-you-are-probably-doing-it-wrong">If it is too complicated, then you are probably doing it wrong.</h2>
+<p>Doing things on AWS should be simple and straight forward. If you find yourself doing something complicated (IP tables etc.), you are probably doing it wrong. Ask your peer for a sanity check on what you are trying to do.</p>
+
+<p>Source:</p>
+
+<ul>
+  <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html">IAM Best Practices</a></li>
+</ul>
+
+
+  </main>
+  <div class="site-branding no-print">
+    Powered by <a href="https://opendoc.sg"><img src="/opendoc-ogp-best-practices/assets/images/opendoc-logo-full.svg"></a>
+  </div>
+
+  <script src="/opendoc-ogp-best-practices/assets/vendor/jump.min.js" charset="utf-8"></script>
+  <script src="/opendoc-ogp-best-practices/assets/vendor/headroom.min.js" charset="utf-8"></script>
+  <script src="/opendoc-ogp-best-practices/assets/vendor/mark.min.js" charset="utf-8"></script>
+  <script src="/opendoc-ogp-best-practices/assets/vendor/web-share-shim.bundle.min.js"></script>
+  <script src="/opendoc-ogp-best-practices/assets/js/toolbar.js"></script>
+  <script src="/opendoc-ogp-best-practices/assets/js/page-index.js"></script>
+  <script src="/opendoc-ogp-best-practices/assets/js/pre-loader.js"></script>
+  <script src="/opendoc-ogp-best-practices/assets/js/lunr.min.js"></script>
+  <script src="/opendoc-ogp-best-practices/assets/js/search.js"></script>
+  <script src="/opendoc-ogp-best-practices/assets/js/header.js"></script>
+  <script src="/opendoc-ogp-best-practices/assets/js/navigation.js"></script>
+</body>
+
+</html>
